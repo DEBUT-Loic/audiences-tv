@@ -14,7 +14,7 @@
     box-sizing: border-box;
 }
 
-img {
+img:not(header img) {
     max-width: 55px;
     max-height: 55px;
     padding: 5px;
@@ -22,7 +22,43 @@ img {
     box-shadow: 5px 5px 1px black;
 }
 p {
-    font-family: "system-ui";
+    font-family: "Segoe UI";
+}
+
+#mire-header {
+    background: linear-gradient(90deg,
+                #D5D5D5 0%,#D5D5D5 calc(100% / 7),
+                #ff0 calc(100% / 7),#ff0 calc(200% / 7),
+                #0ff calc(200% / 7),#0ff calc(300% / 7),
+                #0f0 calc(300% / 7),#0f0 calc(400% / 7),
+                #f0f calc(400% / 7),#f0f calc(500% / 7),
+                #f00 calc(500% / 7),#f00 calc(600% / 7),
+                #00f calc(600% / 7),#00f 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    position: relative;
+    height: 150px;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+#mire-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient( 0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px );
+}
+
+#mire-header div {
+    z-index: 1;
+    height: 100%;
+}
+#mire-header img {
+    height: inherit;
 }
 
 #podium {
@@ -75,18 +111,32 @@ p {
     font-family: "Courier New";
 }
 
+#podium .audiencePDA {
+    border: solid black;
+    border-width: 1px 0;
+}
+#podium .audienceDiv {
+    border: solid black;
+    border-width: 0 1px 0 0;
+    width: 50%;
+}
+#podium .pdaDiv {
+    width: 50%;
+}
+#podium .audiencePDA p:first-child {
+    text-shadow: 0 0 10px black;
+    color: white;
+}
 
 #podium .rangPod {
     margin: 0 auto;
-    width: fit-content;
-    height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    /* background: black; */
+    width: 50px;
+    height: 50px;
+    background: black;
     font-weight: 1000;
-    text-shadow: 2px 2px 1px black;
 }
 
 #podium #premier {
@@ -103,6 +153,19 @@ p {
     background: linear-gradient(135deg, #deb46b, #974826);
     height: 200px;
     border-color: var(--bronze);
+}
+
+#premier .rangPod {
+    width: 45px;
+    height: 45px;
+}
+#deuxieme .rangPod {
+    width: 40px;
+    height: 40px;
+}
+#troisieme .rangPod {
+    width: 35px;
+    height: 35px;
 }
 
 #premier .rangPod p {
@@ -149,7 +212,6 @@ p {
     /* position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 47.5%; */
 
     border: 3px solid;
@@ -158,6 +220,7 @@ p {
     transition: all 0.3s ease;
     cursor: pointer;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 47.5%;
     box-shadow: 
@@ -168,6 +231,7 @@ p {
 #classement > div:first-of-type {
     background: var(--quatrieme);
     border-color: var(--quatreBorder);
+    width: 100%;
 }
 
 .rang {
