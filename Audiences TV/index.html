@@ -3,13 +3,26 @@
 <head>
     <meta charset="utf-8">
     <title>Audiences TV – Récup Links</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/classement.css">
+    <script src="script/jquery-3.7.1.min.js"></script>
     <script src="script/script.js"></script>
 </head>
 <body>
-    <h1>La Bataille des Primes</h1>
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Chargement en cours…</p>
+    </div>
+
+    <header id="mire-header">
+        <div>
+            <img src="img/logo/top-tele.png" alt="Logo de Top Télé"/>
+            <h1>PRIME TIME</h1>
+            <input type="date" name="dateForm" id="dateForm"/>
+        </div>
+    </header>
     
-    <table id="audiences">
+    <!-- <table id="audiences">
         <tr>
             <th>Rang</th>
             <th>Chaîne</th>
@@ -17,6 +30,81 @@
             <th>Téléspectateurs</th>
             <th>PDA</th>
         </tr>
-    </table>
+    </table> -->
+
+    <main id="podium">
+        <div id="deuxieme">
+            <div class="info">
+                <img src="" alt="">
+                <p class="programme"></p>
+
+                <div class="audiencePDA">
+                    <div class="audienceDiv">
+                        <p class="audience"></p>
+                        <p>TÉLÉSPECTATEURS</p>
+                    </div>
+
+                    <div class="pdaDiv">
+                        <p class="pda"></p>
+                        <p>PDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rangPod">
+                <p>2</p>
+            </div>
+        </div>
+
+        <div id="premier">
+            <div class="info">
+                <img src="" alt="">
+                <p class="programme"></p>
+
+                <div class="audiencePDA">
+                    <div class="audienceDiv">
+                        <p class="audience"></p>
+                        <p>TÉLÉSPECTATEURS</p>
+                    </div>
+
+                    <div class="pdaDiv">
+                        <p class="pda"></p>
+                        <p>PDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rangPod">
+                <p>1</p>
+            </div>
+        </div>
+        <div id="troisieme">
+            <div class="info">
+                <img src="" alt="">
+                <p class="programme"></p>
+
+                <div class="audiencePDA">
+                    <div class="audienceDiv">
+                        <p class="audience"></p>
+                        <p>TÉLÉSPECTATEURS</p>
+                    </div>
+
+                    <div class="pdaDiv">
+                        <p class="pda"></p>
+                        <p>PDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rangPod">
+                <p>3</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="classement">
+        <article id="part1"></article>
+        <article id="part2"></article>
+    </main>
 </body>
 </html>
