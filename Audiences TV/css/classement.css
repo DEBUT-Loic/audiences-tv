@@ -53,6 +53,29 @@
     box-sizing: border-box;
 }
 
+.lundi {
+    background-image: linear-gradient(135deg, #f2ff0d, #d1bf00);
+}
+.mardi {
+    background-image: linear-gradient(135deg, #3af8ff, #00e1e2);
+}
+.mercredi {
+    background-image: linear-gradient(135deg, #56ff50, #00e606);
+}
+.jeudi {
+    background-image: linear-gradient(135deg, #ff21f2, #cf00ca);
+}
+.vendredi {
+    background-image: linear-gradient(135deg, #ff2323, #d70000);
+}
+.samedi {
+    background-image: linear-gradient(135deg, #0c0eff, #0609cd);
+}
+.dimanche {
+    background-image: linear-gradient(135deg, #ededed, #c8c8c8);
+}
+
+
 img:not(header img) {
     max-width: 55px;
     max-height: 55px;
