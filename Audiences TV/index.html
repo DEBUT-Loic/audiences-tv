@@ -2,38 +2,50 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Audiences TV – Récup Links</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <link rel="stylesheet" href="css/classement.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Top Télé</title>
+    <link rel="shortcut icon" href="img/logo/icon.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/mobile.css" media="only screen and (max-width: 768px)">
     <script src="script/jquery-3.7.1.min.js"></script>
     <script src="script/script.js"></script>
 </head>
-<body class="lundi">
-    <div id="loading">
-        <div class="spinner"></div>
-        <p>Chargement en cours…</p>
-    </div>
+<body>
+    <aside id="loading">
+        <div class="mireLoad">
+            <div class="bars-horizontal top">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+            
+            <div class="circle">
+                
+                <svg viewBox="140 50 70 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="180.47 58.28 165.23 84.46 173.52 84.46 173.52 127.61 187.42 127.61 187.42 84.46 195.71 84.46 180.47 58.28" fill="green"/>
+                    <polygon points="163.61 156.72 178.85 130.54 170.56 130.54 170.56 87.39 156.67 87.39 156.67 130.54 148.37 130.54 163.61 156.72" fill="red"/>
+                </svg>
+            </div>
+        
+            <div class="bars-horizontal bottom">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div>
+
+            <div class="loading-text">Chargement...</div>
+        </div>
+    </aside>
 
     <header id="mire-header">
         <div>
             <img src="img/logo/top-tele.png" alt="Logo de Top Télé"/>
             <h1>PRIME TIME</h1>
-            <input type="date" name="dateForm" id="dateForm"/>
+            <input type="date" name="dateForm" id="dateForm" disabled/>
         </div>
     </header>
-    
-    <!-- <table id="audiences">
-        <tr>
-            <th>Rang</th>
-            <th>Chaîne</th>
-            <th>Programme</th>
-            <th>Téléspectateurs</th>
-            <th>PDA</th>
-        </tr>
-    </table> -->
+
+    <h1 class="dateURL"></h1>
 
     <main id="podium">
-        <div id="deuxieme">
+        <div id="deuxieme" class="card">
             <div class="info">
                 <img src="" alt="">
                 <p class="programme"></p>
@@ -56,7 +68,7 @@
             </div>
         </div>
 
-        <div id="premier">
+        <div id="premier" class="card">
             <div class="info">
                 <img src="" alt="">
                 <p class="programme"></p>
@@ -78,7 +90,7 @@
                 <p>1</p>
             </div>
         </div>
-        <div id="troisieme">
+        <div id="troisieme" class="card">
             <div class="info">
                 <img src="" alt="">
                 <p class="programme"></p>

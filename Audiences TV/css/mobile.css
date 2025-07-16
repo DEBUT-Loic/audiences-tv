@@ -1,0 +1,115 @@
+#mire-header img {
+    max-width: 25%;
+}
+
+#mire-header h1 {
+    font-size: 1.2rem;
+}
+
+
+.img-programme-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
+}
+
+#podium .audiencePDA {
+    border: none;
+}
+.audiencePDA {
+    flex-direction: column;
+    flex: 0 0 122px !important;
+}
+.audiencePDA > * {
+    width: 100% !important;
+}
+
+.audiencePDA .audienceDiv {
+    border: solid black;
+    border-width: 0 0 1px 1px !important;
+}
+.audiencePDA .pdaDiv {
+    border: solid black;
+    border-width: 0 0 0 1px !important;
+}
+
+#podium .audienceDiv, #podium .pdaDiv {
+    padding: 10px;
+}
+
+#podium {
+    width: calc(100% - 40px);
+    flex-wrap: wrap;
+    margin: 0 auto 10px;
+}
+#podium > div {
+    width: 100%;
+    height: auto !important;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: relative;
+}
+#podium #premier {
+    order: -1;
+}
+
+#podium .info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    height: auto;
+    width: 100%;
+}
+
+.rangPod {
+    position: absolute;
+    left: -16.5px;
+    width: 30px !important;
+    height: 30px !important;
+    border: 2px solid #000;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+}
+.rangPod > * {
+    font-size: 1.2em !important;
+}
+
+.programme {
+    font-size: 1rem;
+}
+
+#podium .audience, #podium .pda,
+#classement .audience, #classement .pda {
+    font-size: 1.1rem;
+}
+#podium .audience + p, #podium .pda + p,
+#classement .audience + p, #classement .pda + p {
+    font-size: 0.7rem;
+}
+
+p[class*="programme"] {
+    margin: 0 16.5px;
+}
+
+/* Classement */
+#classement > div, #classement article > div {
+    align-items: stretch;
+    height: auto;
+    padding: 0;
+}
+.rang {
+    align-self: center;
+}
+
+/* Loading */
+.mireLoad {
+    width: 75vw;
+    height: 75vw;
+}
+.circle {
+    width: 50%;
+    height: 50%;
+}
