@@ -46,6 +46,14 @@
     font-family: "Barlow_BoldItalic";
     src: url("font/Barlow-BoldItalic.ttf");
 }
+@font-face {
+    font-family: "SegoeUI_Gras";
+    src: url("font/segoeuib.ttf");
+}
+@font-face {
+    font-family: "SegoeUI_Black";
+    src: url("font/seguibl.ttf");
+}
 
 * {
     padding: 0;
@@ -95,7 +103,7 @@ img:not(header img) {
     box-shadow: 0px 0px 5px black;
 }
 p {
-    font-family: "Segoe UI";
+    font-family: "SegoeUI_Gras";
 }
 
 #mire-header {
@@ -134,13 +142,40 @@ p {
     align-items: center;
 }
 #mire-header img {
-    max-height: inherit;
+    max-height: 100%;
 }
 #mire-header h1 {
     font-family: "Barlow_Black", sans-serif;
     color: white;
     text-shadow: 0 0 5px black;
     letter-spacing: 3px;
+}
+
+form {
+    display: flex;
+    gap: 5px;
+}
+
+form > div > * {
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 3px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+form > div > *:hover {
+    transform: scale(1.1);
+}
+
+form > div > input {
+    border-color: white;
+    background-color: black;
+    color: white;
+    margin-right: 5px;
+}
+form > div > button {
+    border-color: black;
+    background-color: white;
 }
 
 
@@ -188,7 +223,8 @@ p {
 }
 .audience, .pda {
     font-size: 1.6rem;
-    font-weight: 800;
+    font-family: "SegoeUI_Black";
+    /* font-weight: 800; */
 }
 .audience + p, .pda + p {
     font-size: 0.95rem;
@@ -282,7 +318,7 @@ p {
 
 #classement {
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -321,12 +357,10 @@ p {
     height: 30px;
     background: black;
     font-size: 1.2em;
-    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid #000;
-    font-family: 'Impact', sans-serif;
     text-align: center;
 }
 
@@ -346,10 +380,9 @@ p {
     padding: 10px;
 }
 #classement .audience, #classement .pda {
-    /* font-size: 1.2rem; */
-
     font-size: 1.5em;
-    font-weight: bold;
+    font-family: "SegoeUI_Gras";
+    /* font-weight: bold; */
     text-shadow: 0 0 5px black;
 }
 #classement .programme_classement {

@@ -38,7 +38,15 @@
         <div>
             <img src="img/logo/top-tele.png" alt="Logo de Top Télé"/>
             <h1>PRIME TIME</h1>
-            <input type="date" name="dateForm" id="dateForm" disabled/>
+
+            <form id="audienceForm" method="get">
+                <input type="date" name="dateForm" id="dateForm"/>
+                <div>
+                    <input type="submit" form="audienceForm"/>
+                    <button class="btnCancel" form="#">Réinitialiser</button>
+                </div>
+                
+            </form>
         </div>
     </header>
 

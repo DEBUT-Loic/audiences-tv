@@ -27,13 +27,40 @@ function decodeHTMLEntities(str) {
     return doc.documentElement.textContent;
 }
 
+function createImgProgrammeContainer() {
+    const card = $(".card");
+    for(let i=0;i<card.length;i++) {
+        const imgContainer = $('<div class="img-programme-mobile"></div>');
+        
+        imgContainer.append(card.eq(i).find("img"));
+        imgContainer.append(card.eq(i).find(".programme"));
+        imgContainer.append(card.eq(i).find(".programme_classement"));
+
+        if(i < 3) {
+            card.eq(i).find(".info").prepend(imgContainer);
+        }
+        else {
+            card.eq(i).prepend(imgContainer);
+            card.eq(i).prepend(card.eq(i).find(".rang"));
+        }
+    }
+}
+
 async function loadLinks() {
-    const res  = await fetch('api/get_audiences.php');
+    let getForm = "";
+
+    // Récupérer les paramètres de l'URL actuelle
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get("dateForm") !== undefined) {
+        getForm = "?"+params.toString();
+    }
+
+    const res  = await fetch(`api/get_audiences.php${getForm}`);
     const data = await res.json();
     
     let rang=1;
     let total = data.length-1;
-    console.log(data);
     data.forEach((elem,index) => {
         if(index != data.length-1) {
             const idDiv =
@@ -110,21 +137,45 @@ async function loadLinks() {
             $("title").text(`${$("title").text()} - ${data[index]["date"]}`)
         }
     });
-    
-    // Exécuter la fonction si la largeur est <= 768px
-    console.log($(window).width() <= 768)
+
     if ($(window).width() <= 768) {
         createImgProgrammeContainer();
     }
+
+    document.querySelector(".btnCancel").addEventListener('click', () => {
+        // Supprime les paramètres GET sans recharger la page
+        const urlSansParam = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, urlSansParam);
+        location.reload();
+    });
 }
 
 // window.addEventListener('DOMContentLoaded',loadLinks);
 
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("dateForm");
+    
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const formatDate = (date) => {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); // Mois : 0–11
+        const dd = String(date.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    };
+
+    input.max = formatDate(yesterday);
+
+    // Borne maximale = dans 30 jours
+    const maxDate = new Date();
+    maxDate.setDate(yesterday.getDate() - 1498);
+    input.min = formatDate(maxDate);
+})
+
+window.addEventListener("DOMContentLoaded", async () => {    
     try {
         await loadLinks();
-    } catch (error) {
-        console.error("Erreur lors du chargement des liens :", error);
     } finally {
         $("#loading").animate(
             { top: "-100%" },
@@ -135,22 +186,3 @@ window.addEventListener('DOMContentLoaded', async () => {
         );
     }
 });
-
-function createImgProgrammeContainer() {
-    const card = $(".card");
-    for(let i=0;i<card.length;i++) {
-        const imgContainer = $('<div class="img-programme-mobile"></div>');
-        
-        imgContainer.append(card.eq(i).find("img"));
-        imgContainer.append(card.eq(i).find(".programme"));
-        imgContainer.append(card.eq(i).find(".programme_classement"));
-
-        if(i < 3) {
-            card.eq(i).find(".info").prepend(imgContainer);
-        }
-        else {
-            card.eq(i).prepend(imgContainer);
-            card.eq(i).prepend(card.eq(i).find(".rang"));
-        }
-    }
-}
