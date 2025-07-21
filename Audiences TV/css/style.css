@@ -393,6 +393,7 @@ form > div > button {
     font-size: 0.8rem;
 }
 
+/* 4e */
 #classement > div:first-of-type {
     background: var(--quatrieme);
     border-color: var(--quatreBorder);
@@ -405,6 +406,10 @@ form > div > button {
    color: #0f0;
 }
 
+/* 5e si impair */
+#classement > div:nth-child(2) {
+    width: 100%;
+}
 
 #classement .milieu {
     background: var(--milieu);
