@@ -25,19 +25,17 @@ if(!empty($_GET["dateForm"])) {
     $formatter2 = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE, null, null, 'EEEE');
     $jourSemaine = $formatter2->format($dateForm);
 
-    $dateFormStr = $jourSemaine . '-' . $jourSansZero . '-' . $moisTab[intval($moisForm) - 1] . '-' . $dateForm->format('Y');
+    $dateFormStr = $jourSemaine . '-' . ($jourSansZero==1 ? $jourSansZero."er" : $jourSansZero) . '-' . $moisTab[intval($moisForm) - 1] . '-' . $dateForm->format('Y');
 
 }
 // URL cible
 $url = lien_audiences($dateFormStr);
 
-// echo $url;
-
 $dateURL = "";
 // Récupérer la date
 // Expression régulière pour capturer le jour, le mois en lettres, et l'année
-if (preg_match('/(\d{1,2})-([a-zéû]+)-(\d{4})/', $url, $matches)) {
-    $jour = $matches[1];
+if (preg_match('/(\d{1,2}(?:er)?)-([a-zéû]+)-(\d{4})/', $url, $matches)) {
+    $jour = $matches[1]=="1er" ? 1 : $matches[1];
     $moisTexte = strtolower($matches[2]);
     $annee = $matches[3];
 
@@ -124,7 +122,10 @@ usort($data, function($a, $b) {
     return $pdaB <=> $pdaA;
 });
 
-$data[] = ["date" => $dateURL];
+$data[] = ["date" => [$dateURL]];
+if(!empty($_GET["dateForm"])) {
+    array_push($data[count($data)-1]["date"], $_GET["dateForm"]);
+}
 
 // Retour JSON
 $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
