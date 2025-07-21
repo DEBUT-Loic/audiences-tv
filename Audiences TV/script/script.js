@@ -61,7 +61,9 @@ async function loadLinks() {
     
     let rang=1;
     let total = data.length-1;
+    let rangOdd = 0;
     data.forEach((elem,index) => {
+
         if(index != data.length-1) {
             const idDiv =
             rang === 1 ? "premier" :
@@ -100,9 +102,34 @@ async function loadLinks() {
                     </div>
                     `)
             }
+            else if(total % 2 == 1 && rang == 5) {
+                $(`#classement #part1`).before(`
+                    <div class="milieu card">
+                        <div class="rang">
+                            <p>${rang}</p>
+                        </div>
+                        
+                        <img src="img/${srcImg(elem.chaine)}.png" alt="${elem.chaine}">
+                        <p class="programme_classement">${decodeHTMLEntities(elem.programme)}</p>
+
+                        <div class="audiencePDA">
+                            <div class="audienceDiv">
+                                <p class="audience">${numStr(elem.audience)}</p>
+                                <p>TÉLÉSPECTATEURS</p>
+                            </div>
+
+                            <div class="pdaDiv">
+                                <p class="pda">${elem.pda}</p>
+                                <p>PDA</p>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+                    rangOdd = 1;
+            }
             else {
                 let partie =
-                rang-4 <= Math.floor( (total-4) / 2 ) ? "part1" : "part2";
+                rang-4-rangOdd <= Math.floor( (total-4-rangOdd) / 2 ) ? "part1" : "part2";
 
                 $(`#classement #${partie}`).append(`
                     <div class="${rang == total-3 ? "last-milieu" : idDiv} card">
@@ -131,10 +158,16 @@ async function loadLinks() {
             rang++;
         }
         else {
-            $(".dateURL").text(data[index]["date"]);
-            let dateMots = data[index]["date"].split(" ");
+            let dateRep = data[index]["date"][0].replace("1", "1er");
+
+            $(".dateURL").text(dateRep);
+            let dateMots = dateRep.split(" ");
             $("body").addClass(dateMots[0].toLowerCase());
-            $("title").text(`${$("title").text()} - ${data[index]["date"]}`)
+            $("title").text(`${$("title").text()} - ${dateRep}`)
+
+            if(data[index]["date"].length > 1) {
+                $("#dateForm").val(data[index]["date"][1]);
+            }
         }
     });
 
