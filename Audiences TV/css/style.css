@@ -484,6 +484,49 @@ form > div > button {
     }
 }
 
+#btnStats {
+    text-align: center;
+    margin: 0 auto 10px;
+    display: flex;
+}
+#btnStats button {
+    font-family: Impact;
+    background: black;
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    padding: 3px 7px;
+    width: 100%;
+    cursor: pointer;
+}
+#btnStats a {
+    text-decoration: none;
+    width: 100%;
+    transition: transform 0.5s;
+    
+}
+#btnStats a:first-child {
+    transform-origin: right;
+}
+#btnStats a:last-child {
+    transform-origin: left;
+}
+
+#btnStats a:first-child button {
+    border-radius: 7px 0 0 7px;
+}
+#btnStats a:last-child button {
+    border-radius: 0 7px 7px 0;
+    background-color: white;
+}
+#btnStats a:last-child button {
+    color: black;
+}
+
+#btnStats a:hover {
+    transform: scale(1.1);
+}
+
 /* Loading */
 #loading {
     position: fixed;
