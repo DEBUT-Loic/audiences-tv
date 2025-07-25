@@ -11,7 +11,6 @@ function lien_audiences($dateForm) {
 
     if(empty($dateForm)) {
         $html = file_get_contents($url);
-
         
         preg_match_all($pattern, $html, $matches);
 
@@ -44,6 +43,18 @@ function lien_audiences($dateForm) {
                         $links[0] = true;
                         $links[$href] = true; // déduplication
                         $trouve = true;
+                        continue; // pas besoin de tester "1er" si déjà trouvé
+                    }
+
+                    // Cas particulier : "1" remplacé par "1er"
+                    if (strpos($dateForm, "1") !== false) {
+                        $dateForm1er = preg_replace('/\b1\b/', '1er', $dateForm);
+
+                        if (strpos($href, $dateForm1er) !== false) {
+                            $links[0] = true;
+                            $links[$href] = true;
+                            $trouve = true;
+                        }
                     }
                 }
                 

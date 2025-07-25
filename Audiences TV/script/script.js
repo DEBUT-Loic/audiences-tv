@@ -16,8 +16,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const maxDate = new Date();
     maxDate.setDate(yesterday.getDate() - 1498);
     input.min = formatDate(maxDate);
-
-
 })
 
 window.addEventListener("DOMContentLoaded", async () => {    

@@ -25,7 +25,7 @@ if(!empty($_GET["dateForm"])) {
     $formatter2 = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE, null, null, 'EEEE');
     $jourSemaine = $formatter2->format($dateForm);
 
-    $dateFormStr = $jourSemaine . '-' . ($jourSansZero==1 ? $jourSansZero."er" : $jourSansZero) . '-' . $moisTab[intval($moisForm) - 1] . '-' . $dateForm->format('Y');
+    $dateFormStr = $jourSemaine . '-' . $jourSansZero . '-' . $moisTab[intval($moisForm) - 1] . '-' . $dateForm->format('Y');
 
 }
 // URL cible

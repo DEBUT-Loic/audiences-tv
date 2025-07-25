@@ -7,6 +7,10 @@
     letter-spacing: 1px;
 }
 
+.dateURL {
+    font-size: 1.7rem;
+}
+
 form {
     display: flex;
     flex-direction: column;

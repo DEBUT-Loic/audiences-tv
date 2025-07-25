@@ -46,6 +46,26 @@ function createImgProgrammeContainer() {
     }
 }
 
+function getWeek(date = new Date()) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return weekNo;
+}
+
+function weekMax() {
+    const d = new Date();
+
+    d.setDate(d.getDate() - 1);
+    if(d.getDay() > 0) {
+        d.setDate(d.getDate() - 6);
+    }
+
+    return d;
+}
+
 async function loadLinks() {
     let getForm = "";
 
@@ -191,4 +211,49 @@ async function loadLinks() {
         window.history.replaceState({}, document.title, urlSansParam);
         location.reload();
     });
+}
+
+async function loadLinksStats(week, year) {
+    const res  = await fetch(`../../api/get_averages_audiences.php?week=${week}&year=${year}`);
+    const data = await res.json();
+
+    let rang=1;
+    let total = data.classement.length;
+
+    $(".dateURL").text(data.semaine);
+    $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
+
+    data.classement.forEach(function(elem, index) {
+        const idDiv =
+            rang === 1 ? "premier" :
+            rang === 2 ? "deuxieme" :
+            rang === 3 ? "troisieme" : "";
+
+        const classDiv =
+            rang === 1 ? "premier" :
+            rang === 2 ? "deuxieme" :
+            rang === 3 ? "troisieme" :
+            rang < total - 2 ? "milieu" : "fin";
+
+        $("#classement").append(`
+            <div class="${rang == total-3 ? "last-milieu" : classDiv} card">
+                <div class="rang">
+                    <p>${rang}</p>
+                </div>
+
+                <img src="../../img/${srcImg(elem.chaine)}.png" alt="${elem.chaine}"/>
+
+                <div class="progressMoyenne">
+                    <div class="progressBar"></div>
+
+                    <div class="moyenne">
+                        <p>${numStr(elem.moyenne_audience)}</p>
+                        <p>TÉLÉSPECTATEURS</p>
+                    </div>
+                </div>
+            </div>
+            `);
+
+            rang++;
+    })
 }
