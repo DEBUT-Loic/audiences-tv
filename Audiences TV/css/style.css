@@ -205,3 +205,64 @@
 #classement > div:nth-child(2) {
     width: 100%;
 }
+
+#classement .milieu {
+    background: var(--milieu);
+    border-color: var(--milieuBorder);
+}
+#classement .milieu .rang > p {
+    color: var(--milieu);
+}
+#classement .milieu .audience, #classement .milieu .pda {
+   color: #0ff;
+}
+
+#classement .last-milieu {
+    background: var(--lastMilieu);
+    border-color: var(--lastMilieuBorder);
+}
+#classement .last-milieu .rang > p {
+    color: var(--lastMilieu);
+}
+#classement .last-milieu .audience, #classement .last-milieu .pda {
+    color: #82caff;
+}
+
+#classement .fin .rang:not(#classement .fin:nth-last-child(3) .rang) {
+    background: white;
+}
+
+#classement .fin:nth-last-child(3) {
+    background: var(--antepenultieme);
+    border-color: var(--antepenultiemeBorder);
+}
+#classement .fin:nth-last-child(3) .rang > p {
+    color: var(--antepenultieme);
+}
+#classement .fin:nth-last-child(3) .audience, #classement .fin:nth-last-child(3) .pda {
+    color: #bc98ff;
+}
+
+#classement .fin:nth-last-child(2) {
+    background: var(--penultieme);
+    border-color: var(--penultiemeBorder);
+    color: white;
+}
+#classement .fin:nth-last-child(2) .rang > p {
+    color: var(--penultieme);
+}
+#classement .fin:nth-last-child(2) .audience, #classement .fin:nth-last-child(2) .pda {
+    color: #bfa0ff;
+}
+
+#classement .fin:last-child {
+    color: white;
+    background: var(--ultieme);
+    border-color: var(--ultiemeBorder);
+}
+#classement .fin:last-child .rang > p {
+    color: var(--ultieme);
+}
+#classement .fin:last-child .audience, #classement .fin:last-child .pda {
+    color: #b16bf7;
+}

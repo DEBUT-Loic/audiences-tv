@@ -30,7 +30,6 @@ $lastMonth = $moisTab[$startOfWeek->format("n") - 1];
 $lastYear = $startOfWeek->format("Y");
 
 $audiencesParChaine = [];
-$occurencesParChaine = [];
 
 $baseUrl = "https://debut-loic.fr/top-tele/api/get_audiences.php"; // ⚠️ adapter si besoin
 
@@ -51,21 +50,23 @@ foreach ($dates as $date) {
 
         if (!isset($audiencesParChaine[$chaine])) {
             $audiencesParChaine[$chaine] = 0;
-            $occurencesParChaine[$chaine] = 0;
         }
 
         $audiencesParChaine[$chaine] += $audience;
-        $occurencesParChaine[$chaine] += 1;
     }
 }
 // Préparer le tableau final
 $resultats = [];
+$ttl = 0;
 foreach ($audiencesParChaine as $chaine => $somme) {
-    $moyenne = $somme / $occurencesParChaine[$chaine];
+    $moyenne = $somme / 7;
+    $roundMoy = round($moyenne);
     $resultats[] = [
         "chaine" => $chaine,
-        "moyenne_audience" => round($moyenne)
+        "moyenne_audience" => $roundMoy
     ];
+
+    $ttl += $roundMoy;
 }
 
 // Trier par moyenne décroissante
@@ -74,23 +75,26 @@ usort($resultats, function($a, $b) {
 });
 
 $titleWeek = "";
+$firstDate1er = $firstDate == "1" ? $firstDate."er" : $firstDate;
+$lastDate1er = $lastDate == "1" ? $lastDate."er" : $lastDate;
 
 if($firstYear != $lastYear) {
-    $titleWeek = $firstDate." ".$firstMonth." ".$firstYear;
+    $titleWeek = $firstDate1er." ".$firstMonth." ".$firstYear;
 }
 else if($firstMonth != $lastMonth) {
-    $titleWeek = $firstDate." ".$firstMonth;
+    $titleWeek = $firstDate1er." ".$firstMonth;
 }
 else {
-    $titleWeek = $firstDate;
+    $titleWeek = $firstDate1er;
 }
 
-$titleWeek .= " au ".$lastDate." ".$lastMonth." ".$lastYear;
+$titleWeek .= " au ".$lastDate1er." ".$lastMonth." ".$lastYear;
 
 // Ajouter info semaine
 $output = [
     "semaine" => $titleWeek,
-    "classement" => $resultats
+    "classement" => $resultats,
+    "total_moyennes" => $ttl
 ];
 
 // JSON final

@@ -3,16 +3,21 @@
     margin: 0;
     box-sizing: border-box;
 }
+body {
+    background-image: linear-gradient(135deg, #ff0 75px, #00f);
+}
 
 #classement {
     flex-direction: column;
+    position: relative;
+    margin-bottom: 0;
 }
 
 .card {
     border: 3px solid;
+    background-color: #007bff;
     padding-left: 18.5px;
-    position: relative;
-    transition: all 0.3s ease;
+    position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,9 +27,11 @@
         inset 2px 2px 4px rgba(0,0,0,0.2),
         inset -2px -2px 4px rgba(0,0,0,0.2);
 }
+.card > * {
+    z-index: 1;
+}
 
 .premier {
-    background: linear-gradient(135deg, #ebdf9d, #aa7a24);
     border-color: var(--or);
 }
 .premier .rang > p {
@@ -32,7 +39,6 @@
 }
 
 .deuxieme {
-    background: linear-gradient(135deg, #e3e3e3, #969696);
     border-color: var(--argent);
 }
 .deuxieme .rang > p {
@@ -40,27 +46,132 @@
 }
 
 .troisieme {
-    background: linear-gradient(135deg, #deb46b, #974826);
     border-color: var(--bronze);
 }
 .troisieme .rang > p {
     color: #deb46b;
 }
 
-#classement .card:nth-child(4) {
-    background: var(--quatrieme);
+.quatrieme {
     border-color: var(--quatreBorder);
 }
-#classement .card:nth-child(4) .rang > p {
+.quatrieme .rang > p {
     color: var(--quatrieme);
 }
 
+.milieu {
+    border-color: var(--milieuBorder);
+}
+.milieu .rang > p {
+    color: var(--milieu);
+}
+
+.last-milieu {
+    border-color: var(--lastMilieuBorder);
+}
+.last-milieu .rang > p {
+    color: var(--lastMilieu);
+}
+
+.antepenultieme {
+    border-color: var(--antepenultiemeBorder);
+}
+.antepenultieme .rang > p {
+    color: var(--antepenultieme);
+}
+
+.penultieme {
+    border-color: var(--penultiemeBorder);
+}
+.penultieme .rang > p {
+    color: var(--penultieme);
+}
+
+.ultieme {
+    border-color: var(--ultiemeBorder);
+}
+.ultieme .rang > p {
+    color: var(--ultieme);
+}
+
+.penultieme .rang, .ultieme .rang {
+    background-color: white;
+}
+
+/* before */
+
+/* Activer le fondu */
+.card::before {
+    content: "";
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 0;
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+    box-shadow: 
+        inset 2px 2px 4px rgba(0,0,0,0.2),
+        inset -2px -2px 4px rgba(0,0,0,0.2);
+}
+.active-gradient::before {
+    opacity: 1;
+}
+
+.premier::before {
+    background: linear-gradient(to right, #ebdf9d, #aa7a24);
+}
+.deuxieme::before {
+    background: linear-gradient(to right, #e3e3e3, #969696);
+}
+.troisieme::before {
+    background: linear-gradient(to right, #deb46b, #974826);
+}
+.quatrieme::before {
+    background: var(--quatrieme);
+}
+.milieu::before {
+    background: var(--milieu);
+}
+.last-milieu::before {
+    background: var(--lastMilieu);
+}
+.antepenultieme::before {
+    background: var(--antepenultieme);
+}
+.penultieme::before {
+    background: var(--penultieme);
+}
+.ultieme::before {
+    background: var(--ultieme);
+}
+
+/* autre */
+
+.imgDiv {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .progressMoyenne {
+    width: 80%;
+    height: calc(70px - 17px);
     text-align: center;
+    margin-right: 10px;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background: #eee;
+}
+.progressMoyenne .moyenne {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .progressMoyenne p:first-child {
     color: white;
     text-shadow: 0 0 5px black;
+    font-family: "SegoeUI_Black";
 }
 .progressMoyenne p {
     font-size: 1.5rem;
@@ -68,4 +179,50 @@
 .progressMoyenne p + p {
     font-family: 'Courier New';
     font-size: 0.8rem;
+    color: black;
+    
+}
+
+.progressBar {
+    height: inherit;
+    width: 0%;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4),
+                0 2px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.progressBar.shiny::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.2)
+    );
+    animation: shine 1s infinite;
+}
+
+@keyframes shine {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
+
+@media all and (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: space-evenly;
+        height: 125px !important;
+    }
+
+    .progressMoyenne {
+        margin-right: 0px;
+        width: 90%;
+    }
 }

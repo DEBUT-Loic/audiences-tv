@@ -214,46 +214,110 @@ async function loadLinks() {
 }
 
 async function loadLinksStats(week, year) {
+    let chainesTab = [];
+
+    // Récupérer les paramètres de l'URL actuelle
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get("dateForm") !== null) {
+        week = params.get("dateForm").slice(-2);
+        year = params.get("dateForm").substring(0, 4);
+        console.log(week +" / "+year)
+    }
+
+    if(week>9 && year>=2025) {
+        chainesTab = chainesApresARCOM;
+    }
+    else {
+        chainesTab = chainesAvantARCOM;
+    }
+    console.log(chainesTab)
     const res  = await fetch(`../../api/get_averages_audiences.php?week=${week}&year=${year}`);
     const data = await res.json();
 
-    let rang=1;
-    let total = data.classement.length;
+    let classement = data.classement;
+    let total = classement.length;
+    let topPx = $(window).width() <= 768 ? 135 : 80;
+
 
     $(".dateURL").text(data.semaine);
     $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
 
-    data.classement.forEach(function(elem, index) {
-        const idDiv =
-            rang === 1 ? "premier" :
-            rang === 2 ? "deuxieme" :
-            rang === 3 ? "troisieme" : "";
+    let chainesFinales = [];
+    console.log(classement)
+    chainesTab.forEach(function(elem) {
+        let found = false;
+        
+        for (let i = 0; i < total; i++) {
+            if (elem === classement[i].chaine) {
+                found = true;
 
-        const classDiv =
-            rang === 1 ? "premier" :
-            rang === 2 ? "deuxieme" :
-            rang === 3 ? "troisieme" :
-            rang < total - 2 ? "milieu" : "fin";
+                let pourcentWidth = Math.round((classement[i].moyenne_audience / classement[0].moyenne_audience) * 10_000) / 100;
 
-        $("#classement").append(`
-            <div class="${rang == total-3 ? "last-milieu" : classDiv} card">
-                <div class="rang">
-                    <p>${rang}</p>
-                </div>
-
-                <img src="../../img/${srcImg(elem.chaine)}.png" alt="${elem.chaine}"/>
-
-                <div class="progressMoyenne">
-                    <div class="progressBar"></div>
-
-                    <div class="moyenne">
-                        <p>${numStr(elem.moyenne_audience)}</p>
-                        <p>TÉLÉSPECTATEURS</p>
+                $("#classement").append(`
+                    <div class="card">
+                        <div class="rang"><p></p></div>
+                        <div class="imgDiv">
+                            <img src="../../img/${srcImg(classement[i].chaine)}.png" alt="${classement[i].chaine}"/>
+                        </div>
+                        <div class="progressMoyenne" data-width="${pourcentWidth}">
+                            <div class="progressBar ${srcImg(classement[i].chaine.replace(/6(?=\w)/g, "six").replace(/\+/g, "plus"))}"></div>
+                            <div class="moyenne">
+                                <p>${numStr(classement[i].moyenne_audience)}</p>
+                                <p>TÉLÉSPECTATEURS</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            `);
+                `);
+            }
+        }
 
-            rang++;
-    })
+        if (found) {
+            chainesFinales.push(elem); // on garde que les chaînes valides
+        }
+    });
+
+    setTimeout(() => {
+        $(".progressMoyenne").each(function() {
+            const $bar = $(this).find(".progressBar");
+            const value = $(this).data("width");
+            $bar.addClass("shiny").animate({ width: value + "%" }, 3000, function() {
+                $bar.removeClass("shiny");
+            });
+        });
+    }, 1000);
+
+    $("#classement .card").each(function (i) {
+        $(this).css("top", i * topPx + "px");
+    });
+
+    $("#classement").css("height",($("#classement .card").length * topPx) + "px");
+    console.log(chainesFinales)
+    setTimeout(function() {
+        $("#classement .card").each(function(j) {
+            let nomChaine = chainesFinales[j];
+            let indexClassement = classement.findIndex(e => e.chaine == nomChaine);
+
+            if (indexClassement !== -1) {
+                // Animation de déplacement
+                $(this).animate({ top: indexClassement * topPx + "px" }, 1000);
+
+                // Mise à jour du rang visible
+                $(this).find(".rang p").text(indexClassement + 1);
+
+                // Application des classes podium
+                if (indexClassement === 0) $(this).addClass('premier active-gradient');
+                else if (indexClassement === 1) $(this).addClass('deuxieme active-gradient');
+                else if (indexClassement === 2) $(this).addClass('troisieme active-gradient');
+                else if (indexClassement === 3) $(this).addClass('quatrieme active-gradient');
+                else if (indexClassement === classement.length - 4) $(this).addClass('last-milieu active-gradient');
+                else if (indexClassement === classement.length - 3) $(this).addClass('antepenultieme active-gradient');
+                else if (indexClassement === classement.length - 2) $(this).addClass('penultieme active-gradient');
+                else if (indexClassement === classement.length - 1) $(this).addClass('ultieme active-gradient');
+                else $(this).addClass('milieu active-gradient');
+            }
+        });
+    }, 4000);
+
+    $("title").text(`${$("title").text()} - ${data.semaine}`);
 }
