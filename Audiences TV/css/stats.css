@@ -3,9 +3,6 @@
     margin: 0;
     box-sizing: border-box;
 }
-body {
-    background-image: linear-gradient(135deg, #ff0 75px, #00f);
-}
 
 #classement {
     flex-direction: column;
@@ -34,21 +31,21 @@ body {
 .premier {
     border-color: var(--or);
 }
-.premier .rang > p {
+.premier .rang > p, .premier .progressMoyenne p:first-child {
     color: #ebdf9d;
 }
 
 .deuxieme {
     border-color: var(--argent);
 }
-.deuxieme .rang > p {
+.deuxieme .rang > p, .deuxieme .progressMoyenne p:first-child {
     color: #e3e3e3;
 }
 
 .troisieme {
     border-color: var(--bronze);
 }
-.troisieme .rang > p {
+.troisieme .rang > p, .troisieme .progressMoyenne p:first-child {
     color: #deb46b;
 }
 
@@ -58,6 +55,9 @@ body {
 .quatrieme .rang > p {
     color: var(--quatrieme);
 }
+.quatrieme .progressMoyenne p:first-child{
+    color: #8de88d;
+}
 
 .milieu {
     border-color: var(--milieuBorder);
@@ -65,12 +65,18 @@ body {
 .milieu .rang > p {
     color: var(--milieu);
 }
+.milieu .progressMoyenne p:first-child {
+    color: #75deff;
+}
 
 .last-milieu {
     border-color: var(--lastMilieuBorder);
 }
 .last-milieu .rang > p {
     color: var(--lastMilieu);
+}
+.last-milieu .progressMoyenne p:first-child {
+    color: #c4d3f9;
 }
 
 .antepenultieme {
@@ -167,11 +173,14 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 0 5px;
+    background-image: linear-gradient(transparent 46% 67%, #eee 67%);
 }
 .progressMoyenne p:first-child {
-    color: white;
+    color: #eee;
     text-shadow: 0 0 5px black;
     font-family: "SegoeUI_Black";
+    transition: color 1s;
 }
 .progressMoyenne p {
     font-size: 1.5rem;
@@ -180,7 +189,6 @@ body {
     font-family: 'Courier New';
     font-size: 0.8rem;
     color: black;
-    
 }
 
 .progressBar {

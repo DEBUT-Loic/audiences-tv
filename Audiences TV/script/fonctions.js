@@ -66,6 +66,11 @@ function weekMax() {
     return d;
 }
 
+function monthMax() {
+    const d = new Date();
+    return new Date(d.setMonth(d.getMonth() - 1));
+}
+
 async function loadLinks() {
     let getForm = "";
 
@@ -213,8 +218,8 @@ async function loadLinks() {
     });
 }
 
-async function loadLinksStats(week, year) {
-    let chainesTab = [];
+async function loadLinksStatsWeeks(week, year) {
+    let chainesTab = [], gradientBody = ["#f2ff0d","#3af8ff","#56ff50","#ff5def","#ff5757","#2f45ff","#d5d5d5"];
 
     // Récupérer les paramètres de l'URL actuelle
     const params = new URLSearchParams(window.location.search);
@@ -222,7 +227,6 @@ async function loadLinksStats(week, year) {
     if(params.get("dateForm") !== null) {
         week = params.get("dateForm").slice(-2);
         year = params.get("dateForm").substring(0, 4);
-        console.log(week +" / "+year)
     }
 
     if(week>9 && year>=2025) {
@@ -231,8 +235,8 @@ async function loadLinksStats(week, year) {
     else {
         chainesTab = chainesAvantARCOM;
     }
-    console.log(chainesTab)
-    const res  = await fetch(`../../api/get_averages_audiences.php?week=${week}&year=${year}`);
+    
+    const res  = await fetch(`../../api/get_averages_audiences_weeks.php?week=${week}&year=${year}`);
     const data = await res.json();
 
     let classement = data.classement;
@@ -244,7 +248,7 @@ async function loadLinksStats(week, year) {
     $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
 
     let chainesFinales = [];
-    console.log(classement)
+    
     chainesTab.forEach(function(elem) {
         let found = false;
         
@@ -262,13 +266,26 @@ async function loadLinksStats(week, year) {
                         </div>
                         <div class="progressMoyenne" data-width="${pourcentWidth}">
                             <div class="progressBar ${srcImg(classement[i].chaine.replace(/6(?=\w)/g, "six").replace(/\+/g, "plus"))}"></div>
-                            <div class="moyenne">
-                                <p>${numStr(classement[i].moyenne_audience)}</p>
+                            <div class="moyenne" id="moyenne${i}">
+                                <p>0</p>
                                 <p>TÉLÉSPECTATEURS</p>
                             </div>
                         </div>
                     </div>
                 `);
+
+                setTimeout(function() {
+                    $({ countNum: 0 }).animate({ countNum: classement[i].moyenne_audience }, {
+                        duration: 3000,
+                        easing: "swing",
+                        step: function () {
+                            $(`#moyenne${i} > p:first-child`).text(numStr(Math.floor(this.countNum)));
+                        },
+                        complete: function () {
+                            $(`#moyenne${i} > p:first-child`).text(numStr(this.countNum)); // Arrondi final
+                        }
+                    });
+                }, 1000);
             }
         }
 
@@ -292,7 +309,7 @@ async function loadLinksStats(week, year) {
     });
 
     $("#classement").css("height",($("#classement .card").length * topPx) + "px");
-    console.log(chainesFinales)
+    
     setTimeout(function() {
         $("#classement .card").each(function(j) {
             let nomChaine = chainesFinales[j];
@@ -320,4 +337,171 @@ async function loadLinksStats(week, year) {
     }, 4000);
 
     $("title").text(`${$("title").text()} - ${data.semaine}`);
+
+    $("body").css("background-image",`linear-gradient(135deg, ${gradientBody[month % 7]} 10%, #000)`);
+
+    document.querySelector(".btnCancel").addEventListener('click', () => {
+        // Supprime les paramètres GET sans recharger la page
+        const urlSansParam = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, urlSansParam);
+        location.reload();
+    });
+
+    let cible = 100;      // Valeur finale
+    let duree = 2000;     // Durée en ms (ici 2 secondes)
+
+    $({ countNum: 0 }).animate({ countNum: cible }, {
+        duration: duree,
+        easing: 'swing',
+        step: function () {
+            $('#compteur').text(Math.floor(this.countNum));
+        },
+        complete: function () {
+            $('#compteur').text(this.countNum); // Arrondi final
+        }
+    });
+}
+
+async function loadLinksStatsMonths(month, year) {
+    let chainesTab = [], gradientBody = ["#f2ff0d","#3af8ff","#56ff50","#ff5def","#ff5757","#2f45ff","#d5d5d5"];
+
+    // Récupérer les paramètres de l'URL actuelle
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get("dateForm") !== null) {
+        month = params.get("dateForm").slice(-2);
+        year = params.get("dateForm").substring(0, 4);
+    }
+
+    if(month>=2 && year>=2025) {
+        chainesTab = chainesApresARCOM;
+    }
+    else {
+        chainesTab = chainesAvantARCOM;
+    }
+    
+    const res  = await fetch(`../../api/get_averages_audiences_months.php?month=${month}&year=${year}`);
+    const data = await res.json();
+
+    let classement = data.classement;
+    let total = classement.length;
+    let topPx = $(window).width() <= 768 ? 135 : 80;
+
+
+    $(".dateURL").text(data.mois);
+    $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
+
+    let chainesFinales = [];
+    
+    chainesTab.forEach(function(elem) {
+        let found = false;
+        
+        for (let i = 0; i < total; i++) {
+            if (elem === classement[i].chaine) {
+                found = true;
+
+                let pourcentWidth = Math.round((classement[i].moyenne_audience / classement[0].moyenne_audience) * 10_000) / 100;
+
+                $("#classement").append(`
+                    <div class="card">
+                        <div class="rang"><p></p></div>
+                        <div class="imgDiv">
+                            <img src="../../img/${srcImg(classement[i].chaine)}.png" alt="${classement[i].chaine}"/>
+                        </div>
+                        <div class="progressMoyenne" data-width="${pourcentWidth}">
+                            <div class="progressBar ${srcImg(classement[i].chaine.replace(/6(?=\w)/g, "six").replace(/\+/g, "plus"))}"></div>
+                            <div class="moyenne" id="moyenne${i}">
+                                <p>0</p>
+                                <p>TÉLÉSPECTATEURS</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                setTimeout(function() {
+                    $({ countNum: 0 }).animate({ countNum: classement[i].moyenne_audience }, {
+                        duration: 3000,
+                        easing: "swing",
+                        step: function () {
+                            $(`#moyenne${i} > p:first-child`).text(numStr(Math.floor(this.countNum)));
+                        },
+                        complete: function () {
+                            $(`#moyenne${i} > p:first-child`).text(numStr(this.countNum)); // Arrondi final
+                        }
+                    });
+                }, 1000);
+            }
+        }
+
+        if (found) {
+            chainesFinales.push(elem); // on garde que les chaînes valides
+        }
+    });
+
+    setTimeout(() => {
+        $(".progressMoyenne").each(function() {
+            const $bar = $(this).find(".progressBar");
+            const value = $(this).data("width");
+            $bar.addClass("shiny").animate({ width: value + "%" }, 3000, function() {
+                $bar.removeClass("shiny");
+            });
+        });
+    }, 1000);
+
+    $("#classement .card").each(function (i) {
+        $(this).css("top", i * topPx + "px");
+    });
+
+    $("#classement").css("height",($("#classement .card").length * topPx) + "px");
+    
+    setTimeout(function() {
+        $("#classement .card").each(function(j) {
+            let nomChaine = chainesFinales[j];
+            let indexClassement = classement.findIndex(e => e.chaine == nomChaine);
+
+            if (indexClassement !== -1) {
+                // Animation de déplacement
+                $(this).animate({ top: indexClassement * topPx + "px" }, 1000);
+
+                // Mise à jour du rang visible
+                $(this).find(".rang p").text(indexClassement + 1);
+
+                // Application des classes podium
+                if (indexClassement === 0) $(this).addClass('premier active-gradient');
+                else if (indexClassement === 1) $(this).addClass('deuxieme active-gradient');
+                else if (indexClassement === 2) $(this).addClass('troisieme active-gradient');
+                else if (indexClassement === 3) $(this).addClass('quatrieme active-gradient');
+                else if (indexClassement === classement.length - 4) $(this).addClass('last-milieu active-gradient');
+                else if (indexClassement === classement.length - 3) $(this).addClass('antepenultieme active-gradient');
+                else if (indexClassement === classement.length - 2) $(this).addClass('penultieme active-gradient');
+                else if (indexClassement === classement.length - 1) $(this).addClass('ultieme active-gradient');
+                else $(this).addClass('milieu active-gradient');
+            }
+        });
+    }, 4000);
+
+    $("title").text(`${$("title").text()} - ${data.mois}`);
+
+    $("body").css("background-image",`linear-gradient(135deg, ${gradientBody[month % 7]} 10%, #000)`);
+
+    document.querySelector(".btnCancel").addEventListener('click', () => {
+        // Supprime les paramètres GET sans recharger la page
+        const urlSansParam = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, urlSansParam);
+        location.reload();
+    });
+
+    let cible = 100;      // Valeur finale
+    let duree = 2000;     // Durée en ms (ici 2 secondes)
+
+    $({ countNum: 0 }).animate({ countNum: cible }, {
+        duration: duree,
+        easing: 'swing',
+        step: function () {
+            $('#compteur').text(Math.floor(this.countNum));
+        },
+        complete: function () {
+            $('#compteur').text(this.countNum); // Arrondi final
+        }
+    });
 }
