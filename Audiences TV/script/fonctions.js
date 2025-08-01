@@ -68,7 +68,7 @@ function weekMax() {
 
 function monthMax() {
     const d = new Date();
-    return new Date(d.setMonth(d.getMonth() - 1));
+    return new Date(d.getFullYear(), d.getMonth(), 0); // Jour 0 = dernier jour du mois précédent
 }
 
 async function loadLinks() {
@@ -205,6 +205,7 @@ async function loadLinks() {
     });
 
     if ($(window).width() <= 768) {
+        console.log("le chien")
         createImgProgrammeContainer();
     }
 
@@ -244,7 +245,7 @@ async function loadLinksStatsWeeks(week, year) {
     let topPx = $(window).width() <= 768 ? 135 : 80;
 
 
-    $(".dateURL").text(data.semaine);
+    $(".dateURL").text(data.semaine[0]);
     $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
 
     let chainesFinales = [];
@@ -336,9 +337,9 @@ async function loadLinksStatsWeeks(week, year) {
         });
     }, 4000);
 
-    $("title").text(`${$("title").text()} - ${data.semaine}`);
+    $("title").text(`${$("title").text()} - ${data.semaine[0]}`);
 
-    $("body").css("background-image",`linear-gradient(135deg, ${gradientBody[month % 7]} 10%, #000)`);
+    $("body").css("background-image",`linear-gradient(135deg, ${gradientBody[week % 7]} 10%, #000)`);
 
     document.querySelector(".btnCancel").addEventListener('click', () => {
         // Supprime les paramètres GET sans recharger la page
@@ -360,6 +361,10 @@ async function loadLinksStatsWeeks(week, year) {
             $('#compteur').text(this.countNum); // Arrondi final
         }
     });
+
+    if(data.semaine.length > 1) {
+        $("#dateForm").val(data.semaine[1]);
+    }
 }
 
 async function loadLinksStatsMonths(month, year) {
@@ -382,13 +387,14 @@ async function loadLinksStatsMonths(month, year) {
     
     const res  = await fetch(`../../api/get_averages_audiences_months.php?month=${month}&year=${year}`);
     const data = await res.json();
+    console.log(data)
 
     let classement = data.classement;
     let total = classement.length;
     let topPx = $(window).width() <= 768 ? 135 : 80;
 
 
-    $(".dateURL").text(data.mois);
+    $(".dateURL").text(data.mois[0]);
     $("#btnStats").css("width",$(".dateURL").innerWidth()+"px");
 
     let chainesFinales = [];
@@ -480,7 +486,7 @@ async function loadLinksStatsMonths(month, year) {
         });
     }, 4000);
 
-    $("title").text(`${$("title").text()} - ${data.mois}`);
+    $("title").text(`${$("title").text()} - ${data.mois[0]}`);
 
     $("body").css("background-image",`linear-gradient(135deg, ${gradientBody[month % 7]} 10%, #000)`);
 
@@ -504,4 +510,8 @@ async function loadLinksStatsMonths(month, year) {
             $('#compteur').text(this.countNum); // Arrondi final
         }
     });
+
+    if(data.mois.length > 1) {
+        $("#dateForm").val(data.mois[1]);
+    }
 }
