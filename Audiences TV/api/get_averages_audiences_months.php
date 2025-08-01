@@ -2,6 +2,19 @@
 header("Content-Type: application/json; charset=utf-8");
 $moisTab = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
 
+function fetchUrlContent($url, $timeout = 10) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+
+    $response = curl_exec($ch);
+
+    curl_close($ch);
+
+    return $response;
+}
+
 $month = "";
 $year = "";
 
@@ -16,6 +29,7 @@ $lastDay = new DateTime("$year-$month-01");
 $lastDay->modify("last day of this month");
 
 $dates = [];
+
 while ($startOfMonth->format("Y-m-d") != $lastDay->format("Y-m-d")) {
     $dates[] = $startOfMonth->format("Y-m-d"); // format de date, ex : 2025-07-21
     $startOfMonth->modify("+1 day");
@@ -27,11 +41,17 @@ $baseUrl = "https://debut-loic.fr/top-tele/api/get_audiences.php"; // ⚠️ ada
 
 foreach ($dates as $date) {
     $url = $baseUrl . "?dateForm=" . $date;
-    $json = file_get_contents($url); // @ pour éviter warning si erreur
+    $json = fetchUrlContent($url, 10);
+    
+    if ($json === false) {
+        // page absente ou timeout, passer à la date suivante
+        continue;
+    }
+
     $data = json_decode($json, true);
 
     if (!$data || isset($data["error"])) {
-        continue; // ignorer les erreurs ou pages absentes
+        continue;
     }
 
     foreach ($data as $item) {
@@ -47,9 +67,12 @@ foreach ($dates as $date) {
         $audiencesParChaine[$chaine] += $audience;
     }
 }
+
 // Préparer le tableau final
+
 $resultats = [];
 $ttl = 0;
+
 foreach ($audiencesParChaine as $chaine => $somme) {
     $moyenne = $somme / count($dates);
     $roundMoy = round($moyenne);
@@ -67,10 +90,15 @@ usort($resultats, function($a, $b) {
 $titleMonth = ucfirst($moisTab[intval($month - 1)])." ".$year;
 
 // Ajouter info semaine
+
 $output = [
-    "mois" => $titleMonth,
+    "mois" => [$titleMonth],
     "classement" => $resultats
 ];
+
+if(!empty($_GET["month"]) && !empty($_GET["year"])) {
+    $output["mois"][] = "$year-$month";
+}
 
 // JSON final
 echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

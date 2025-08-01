@@ -2,6 +2,19 @@
 header("Content-Type: application/json; charset=utf-8");
 $moisTab = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
 
+function fetchUrlContent($url, $timeout = 10) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+
+    $response = curl_exec($ch);
+
+    curl_close($ch);
+
+    return $response;
+}
+
 $week = "";
 $year = "";
 
@@ -35,7 +48,13 @@ $baseUrl = "https://debut-loic.fr/top-tele/api/get_audiences.php"; // ⚠️ ada
 
 foreach ($dates as $date) {
     $url = $baseUrl . "?dateForm=" . $date;
-    $json = file_get_contents($url); // @ pour éviter warning si erreur
+    $json = fetchUrlContent($url, 10);
+
+    if ($json === false) {
+        // page absente ou timeout, passer à la date suivante
+        continue;
+    }
+
     $data = json_decode($json, true);
 
     if (!$data || isset($data["error"])) {
@@ -92,10 +111,14 @@ $titleWeek .= " au ".$lastDate1er." ".$lastMonth." ".$lastYear;
 
 // Ajouter info semaine
 $output = [
-    "semaine" => $titleWeek,
+    "semaine" => [$titleWeek],
     "classement" => $resultats,
     "total_moyennes" => $ttl
 ];
+
+if(!empty($_GET["week"]) && !empty($_GET["year"])) {
+    $output["semaine"][] = "$year-W$week";
+}
 
 // JSON final
 echo json_encode($output, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

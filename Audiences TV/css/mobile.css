@@ -101,6 +101,7 @@ form {
 
 p[class*="programme"] {
     margin: 0 16.5px;
+    word-break: break-word;
 }
 
 /* Classement */
