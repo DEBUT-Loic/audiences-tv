@@ -1,31 +1,32 @@
 Le studio = Studio Guili
 
-Jeux de mots titres animés : (15)
-	- Attaque des gitans
-	- Un "punch (cocktail)" Man
-	- Jojo Bernard Adventure
-	- Saoul Land (bourré)
-	- Aka Mega Kill (le vrai : Akame ga Kill)
-	- One piece ou Une pièce, pour bébé
-	- Kouroukoukou Basket
-	- Jute dessus Kaiser (Jujutsu Kaisen)
-	- Ma route oh ! (Naruto)
-	- Saouliteur (Soul Eater)
-	- Beau cul haut, no pico ! (Boku no Pico)
-	- Mou chie chie ! (Mushishi)
-	- Le gode du lycée (The God of High School)
-	- Tokyo Cool (Tokyo Ghoul)
-	- Re:ZERO (il répond à un email objet zéro)
+résolution 300 ppi => A4 210mm x 280mm et RGB
 
-Ne rien comprendre au scénario : (5)
-	- Le Tombeau des Lucioles
-	- Angel Beats! (MMA des anges)
-	- That Time I Got Reincarnated as a Slime
-	- Black Clover (Totally Spies faisant un black face)
-	- Fullmetal Alchemist (groupe de métal Alchemist)
+Jeux de mots titres animés : (12 / 12)
+
+	- Attaque des gitans								X
+	- Norauto (Naruto)									X
+	- Burrito (Boruto)									X
+	- Jojo Bernard Adventure							X
+	- Un "punch (cocktail)" Man							X
+	- Jute dessus Kaiser (Jujutsu Kaisen)				X
+	- Kouroukoukou Basket								X
+	- Le gode du lycée (The God of High School)			X
+	- Mou chie chie ! (Mushishi)						X
+	- Re:ZERO (il répond à un email objet zéro)			X
+	- Saoul Land (bourré)								X
+	- Saouliteur (Soul Eater)							X
+
+Ne rien comprendre au scénario : (3 / 3)
+
+	- Black Clover (Totally Spies avec une black face)	X
+	- Angel Beats! (MMA des anges)						X
+	- Capitaine Albatar									X
 
 
 Blague à réutiliser :
 
 (Black Clover)
+
 - Qu'est-ce qu'un arbitre ne donne jamais à un joueur asiatique ? Un carton jaune
+
