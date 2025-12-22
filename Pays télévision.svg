@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: aqua;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: blue;
+      }
+
+      .cls-4 {
+        fill: red;
+      }
+
+      .cls-5 {
+        fill: #f0f;
+      }
+
+      .cls-6 {
+        fill: #aaa;
+      }
+
+      .cls-7 {
+        fill: lime;
+      }
+
+      .cls-8 {
+        fill: #ff0;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1-2" data-name="Calque 1">
+    <rect width="64" height="64"/>
+    <polygon class="cls-2" points="36.01 24.03 52.02 16.32 41.6 30.71 57.61 38.42 39.85 39.24 43.81 56.57 32.1 43.2 21.01 57.1 24.16 39.61 6.39 39.61 22.03 31.16 10.95 17.27 27.3 24.23 31.26 6.9 36.01 24.03"/>
+    <polygon class="cls-8" points="27.3 24.23 31.26 6.9 36.01 24.03 31.86 33.17 27.3 24.23"/>
+    <polygon class="cls-6" points="22.03 31.16 10.95 17.27 27.3 24.23 31.86 33.17 22.03 31.16"/>
+    <polygon class="cls-3" points="24.16 39.61 6.39 39.61 22.03 31.16 31.86 33.17 24.16 39.61"/>
+    <polygon class="cls-4" points="32.1 43.2 21.01 57.1 24.16 39.61 31.86 33.17 32.1 43.2"/>
+    <polygon class="cls-5" points="39.85 39.24 43.81 56.57 32.1 43.2 31.86 33.17 39.85 39.24"/>
+    <polygon class="cls-7" points="41.6 30.71 57.61 38.42 39.85 39.24 31.86 33.17 41.6 30.71"/>
+    <polygon class="cls-1" points="36.01 24.03 52.02 16.32 41.6 30.71 31.86 33.17 36.01 24.03"/>
+  </g>
+</svg>

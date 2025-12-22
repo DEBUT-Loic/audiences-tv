@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: aqua;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: blue;
+      }
+
+      .cls-4 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+
+      .cls-5 {
+        fill: red;
+      }
+
+      .cls-6 {
+        fill: #f0f;
+      }
+
+      .cls-7 {
+        fill: lime;
+      }
+
+      .cls-8 {
+        fill: #ff0;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1-2" data-name="Calque 1">
+    <g>
+      <rect class="cls-8" width="80" height="1080"/>
+      <rect class="cls-1" x="80" width="80" height="1080"/>
+      <rect class="cls-7" x="160" width="80" height="1080"/>
+      <rect x="240" width="1440" height="1080"/>
+      <rect class="cls-6" x="1680" width="80" height="1080"/>
+      <rect class="cls-5" x="1760" width="80" height="1080"/>
+      <rect class="cls-3" x="1840" width="80" height="1080"/>
+    </g>
+    <g id="Calque_6" data-name="Calque 6">
+      <g id="Calque_2-2" data-name="Calque 2">
+        <ellipse class="cls-4" cx="960.06" cy="539.66" rx="628.95" ry="178.21"/>
+        <path class="cls-4" d="M1526.85,252.69c36.53,79.82-187.56,273.15-500.5,431.82-312.95,158.67-596.24,222.6-632.77,142.8-36.53-79.82,187.56-273.16,500.5-431.83,312.95-158.68,596.24-222.61,632.77-142.79Z"/>
+        <path class="cls-4" d="M393.58,252.69c-36.53,79.82,187.56,273.15,500.5,431.82,312.95,158.68,596.24,222.6,632.77,142.8,36.52-79.82-187.56-273.16-500.5-431.83C713.4,236.81,430.1,172.88,393.58,252.69Z"/>
+      </g>
+    </g>
+    <polygon class="cls-2" points="978.57 493.22 1050.31 458.68 1003.59 523.16 1075.33 557.71 995.79 561.38 1013.51 639.01 961.04 579.12 911.39 641.37 925.51 563.01 845.88 563.01 915.95 525.18 866.3 462.93 939.56 494.13 957.28 416.5 978.57 493.22"/>
+  </g>
+</svg>
