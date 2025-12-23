@@ -1,0 +1,58 @@
+@font-face {
+    font-family: "SegoeUI_Bold";
+    src: url("seguibl.ttf");
+}
+@font-face {
+    font-family: "Barlow_Bold";
+    src: url("Barlow-Bold.ttf");
+}
+@font-face {
+    font-family: "Segoe_Normal";
+    src: url("segoeuib.ttf");
+}
+@font-face {
+    font-family: "Barlow_Regular";
+    src: url("Barlow-Regular.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100dvh;
+    font-family: "Barlow_Bold";
+}
+
+h1 {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: calc(100% - 40px);
+}
+
+table, table * {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-transform: uppercase;
+}
+
+th, td {
+    padding: 2px;
+    text-align: center;
+}
+
+td {
+    font-family: "Barlow_Regular";
+}
